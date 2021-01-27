@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const client = new Discord.Client({partials: ["MESSAGE", "USER", "REACTION"]});
+const client = new Discord.Client({partials: ["MESSAGE", "CHANNEL", "REACTION"]});
 const enmap = require('enmap');
 const {token, prefix} = require('./config.json');
 
@@ -31,12 +31,8 @@ client.on('message', async message => {
             .setTitle("Ticket System")
             .setDescription("React to open a ticket!")
             .setFooter("Ticket System")
-            .setColor("00ff00")
-        );
-
+            .setColor("00ff00"));
         sent.react('🎫');
-        settings.set(`${message.guild.id}-ticket`, sent.id);
-
         message.channel.send("Ticket System Setup Done!")
     }
 
@@ -45,19 +41,17 @@ client.on('message', async message => {
         message.channel.delete();
     }
 });
-
+//Hi! I'm Frosty, I took the time to edit the code since there were things that were wrong.
+// DISCORD = FROSTY#0002
 client.on('messageReactionAdd', async (reaction, user) => {
-    if(user.partial) await user.fetch();
-    if(reaction.partial) await reaction.fetch();
     if(reaction.message.partial) await reaction.message.fetch();
-
+    if(reaction.partial) await reaction.fetch();
+    if(reaction.partial) await reaction.fetch();
     if(user.bot) return;
+    if(!reaction.message.guild) return;
+    if(reaction.message.id === 'EMBED, MESSAGE ID')
 
-    let ticketid = await settings.get(`${reaction.message.guild.id}-ticket`);
-
-    if(!ticketid) return;
-
-    if(reaction.message.id == ticketid && reaction.emoji.name == '🎫') {
+    if(reaction.emoji.name === 'EMOJI') {
         reaction.users.remove(user);
 
         reaction.message.guild.channels.create(`ticket-${user.username}`, {
